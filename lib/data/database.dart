@@ -60,8 +60,7 @@ class DatabaseHelper {
 
   Future<int> deleteCity(FavoriteCity city) async {
     Database database = await this.database;
-    var result =
-        await database.delete(tableName, where: '$cityId', whereArgs: [cityId]);
+    var result = await database.rawDelete('DELETE FROM $tableName WHERE $cityId = ${city.id}');
     return result;
   }
 

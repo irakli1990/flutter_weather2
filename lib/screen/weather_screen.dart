@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:flare_flutter/flare.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sunshine/backend/city/bloc.dart';
 import 'package:sunshine/backend/theme_bloc.dart';
 import 'package:sunshine/backend/weather/bloc.dart';
 import 'package:sunshine/backend/weather/weather_bloc.dart';
+import 'package:sunshine/models/favorite_city.dart';
 import 'package:sunshine/models/weather.dart';
 import 'package:sunshine/models/weather_forecast.dart';
 import 'package:sunshine/widgets/combine_temperature.dart';
@@ -24,7 +25,6 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   Completer<void> _refreshCompleter;
-
 
   @override
   void initState() {
@@ -91,6 +91,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           BlocProvider.of<WeatherBloc>(context).add(
                             RefreshWeather(city: weather.name),
                           );
+                          BlocProvider.of<CityBloc>(context).add(AddCity(
+                              FavoriteCity.withId(
+                                  id: weather.id, cityName: weather.name)));
                           return _refreshCompleter.future;
                         },
                         child: ListView(
