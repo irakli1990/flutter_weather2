@@ -1,0 +1,1 @@
+const APP_ID = '43ea6baaad7663dc17637e22ee6f78f2';const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
