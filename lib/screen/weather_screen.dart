@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:sunshine/backend/city/bloc.dart';
 import 'package:sunshine/backend/theme_bloc.dart';
 import 'package:sunshine/backend/weather/bloc.dart';
@@ -49,6 +50,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return _getLocalisation();
   }
 
+  // getting localisation
   _getLocalisation() async {
     _currentPosition = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -70,9 +72,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
     }
   }
 
-  // showing
+  _formatDateTime() {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('MM-dd-yyyy hh:mm').format(now);
+    return formattedDate;
+  }
+
+  // showing notification
   showNotification() async {
-    var time = new Time(11, 48, 0);
+    var time = new Time(20, 36, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name',
@@ -84,17 +92,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
         new NotificationDetails(androidPlatformChannelSpecifics, iOS);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
-        'show daily title',
-        'Daily notification shown at approximately ${time.hour}:${time.minute}:${time.second}',
+        'Check weather today',
+        'Every day weather in your city ${_formatDateTime()}',
         time,
         platform);
   }
 
   @override
   Widget build(BuildContext context) {
-    var time =
-        new Time(DateTime.now().hour, DateTime.now().minute, 0).toString();
-    print(time);
     showNotification();
     return Scaffold(
       appBar: AppBar(

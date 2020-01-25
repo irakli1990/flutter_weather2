@@ -1,16 +1,27 @@
 # sunshine
 
-A new Flutter application.
+Simple weather application using Bloc architecture.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Project is based on google Flutter framework.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Project structure:
+- backend (Folder for business logic)
+- config  (App configuration)
+- data    (Sqflite database helper)
+- models  (models for parsing api json)
+- repository (open weathermap comunication methods)
+- screen    (application screens)
+- widgets   (single costume widgets build due tue )
+- main.dart (entry point to application)
+- simple_bloc_delegate.dart (bloc architecture delegate for debug purpose)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Application has dynamic theming based on weather condition.
+
+Scroll down on weather screen performs two function add localisation
+to database and refresh weather data. added city can be deleted on text field
+page by dissmisable by sliding to any direction.
+
+

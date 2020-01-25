@@ -19,7 +19,7 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 20.0),
           child: Text(
-            '${temperature}°',
+            '$temperature°',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
@@ -30,7 +30,7 @@ class Temperature extends StatelessWidget {
         Column(
           children: [
             Text(
-              'max: ${high}°',
+              'max: $high°',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
@@ -38,7 +38,7 @@ class Temperature extends StatelessWidget {
               ),
             ),
             Text(
-              'min: ${low}°',
+              'min: $low°',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
@@ -50,5 +50,4 @@ class Temperature extends StatelessWidget {
       ],
     );
   }
-
 }

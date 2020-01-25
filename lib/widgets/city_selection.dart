@@ -9,10 +9,11 @@ class CitySelection extends StatefulWidget {
 
 class _CitySelectionState extends State<CitySelection> {
   final TextEditingController _textController = TextEditingController();
+  CityBloc _cityBloc;
 
   @override
   Widget build(BuildContext context) {
-    var cityBloc = BlocProvider.of<CityBloc>(context)..add(LoadCities());
+    _cityBloc = BlocProvider.of<CityBloc>(context)..add(LoadCities());
     return Scaffold(
       appBar: AppBar(
         title: Text('City'),
@@ -53,20 +54,22 @@ class _CitySelectionState extends State<CitySelection> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           child: Dismissible(
-                              background: Container(
-                                  alignment: Alignment.centerRight,
-                                  color: Colors.red,child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.delete,color: Colors.white,),
-                                  )),
+                            background: Container(
+                                alignment: Alignment.centerRight,
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                )),
                             key: Key(state.cities[index].cityName),
                             child: Card(
                               child: ListTile(
                                 title: Text(state.cities[index].cityName),
-                                leading: IconButton(
-                                  icon: Icon(Icons.check_circle,
-                                      color: Colors.green),
-                                ),
+                                leading: Icon(Icons.check_circle,
+                                    color: Colors.green),
                               ),
                             ),
                             onDismissed: (_) {
@@ -74,9 +77,9 @@ class _CitySelectionState extends State<CitySelection> {
                                 BlocProvider.of<CityBloc>(context)
                                   ..add(DeleteCity(state.cities[index]));
                               });
-                              Scaffold
-                                  .of(context)
-                                  .showSnackBar(SnackBar(content: Text("${state.cities[index].cityName} deleted")));
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "${state.cities[index].cityName} deleted")));
                             },
                           ),
                           onTap: () {
