@@ -46,10 +46,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   Future onSelectNotification(String payload) {
-    _getLocalisationWeather();
+    return _getLocalisation();
   }
 
-  _getLocalisationWeather() async {
+  _getLocalisation() async {
     _currentPosition = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     try {
@@ -72,7 +72,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   // showing
   showNotification() async {
-    var time = new Time(12, 29, 0);
+    var time = new Time(11, 48, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name',
