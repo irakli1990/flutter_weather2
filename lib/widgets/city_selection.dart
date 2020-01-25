@@ -53,6 +53,12 @@ class _CitySelectionState extends State<CitySelection> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           child: Dismissible(
+                              background: Container(
+                                  alignment: Alignment.centerRight,
+                                  color: Colors.red,child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.delete,color: Colors.white,),
+                                  )),
                             key: Key(state.cities[index].cityName),
                             child: Card(
                               child: ListTile(

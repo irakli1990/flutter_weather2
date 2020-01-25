@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sunshine/backend/city/bloc.dart';
 import 'package:sunshine/backend/theme_bloc.dart';
 import 'package:sunshine/backend/weather/bloc.dart';
@@ -24,16 +26,76 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final Geolocator geoLocator = Geolocator()..forceAndroidLocationManager;
+  Position _currentPosition;
+  Placemark _place;
+  String _currentCity;
   Completer<void> _refreshCompleter;
 
   @override
   void initState() {
     super.initState();
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSettings = new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings,
+        onSelectNotification: onSelectNotification);
     _refreshCompleter = Completer<void>();
+  }
+
+  Future onSelectNotification(String payload) {
+    _getLocalisationWeather();
+  }
+
+  _getLocalisationWeather() async {
+    _currentPosition = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    try {
+      List<Placemark> p = await geoLocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      _place = p[0];
+
+      setState(() {
+        _currentCity = "${_place.locality}";
+      });
+    } catch (e) {
+      print(e);
+    }
+    if (_currentCity != null) {
+      BlocProvider.of<WeatherBloc>(context)
+          .add(GetWeatherEvent(city: _currentCity));
+    }
+  }
+
+  // showing
+  showNotification() async {
+    var time = new Time(12, 29, 0);
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        'repeatDailyAtTime channel id',
+        'repeatDailyAtTime channel name',
+        'repeatDailyAtTime description',
+        priority: Priority.High,
+        importance: Importance.Max);
+    var iOS = new IOSNotificationDetails();
+    var platform =
+        new NotificationDetails(androidPlatformChannelSpecifics, iOS);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'show daily title',
+        'Daily notification shown at approximately ${time.hour}:${time.minute}:${time.second}',
+        time,
+        platform);
   }
 
   @override
   Widget build(BuildContext context) {
+    var time =
+        new Time(DateTime.now().hour, DateTime.now().minute, 0).toString();
+    print(time);
+    showNotification();
     return Scaffold(
       appBar: AppBar(
         title: Text('SunShine'),
