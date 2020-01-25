@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sunshine/models/weather.dart';
 
+
+// Weather condition returning image asset for weather screen
 class WeatherCondition extends StatelessWidget {
   final WeatherModel weather;
 

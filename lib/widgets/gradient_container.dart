@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:meta/meta.dart';
 
+
+// gradient container for application
 class GradientContainer extends StatelessWidget {
   final Widget child;
   final MaterialColor color;

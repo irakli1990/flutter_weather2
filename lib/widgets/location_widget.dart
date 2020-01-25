@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Location widget
 class Location extends StatelessWidget {
   final String location;
 

@@ -8,6 +8,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:sunshine/models/weather_forecast.dart';
 
+// Logic for dynamic theming
 class ThemeState extends Equatable {
   final ThemeData theme;
   final MaterialColor color;

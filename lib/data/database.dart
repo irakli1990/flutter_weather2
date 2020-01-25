@@ -12,12 +12,15 @@ class DatabaseHelper {
 
   DatabaseHelper._createInstance();
 
+  // city table id
   String cityId = 'id';
+  // city name table column
   String cityName = 'city_name';
+  // table name
   String tableName = 'cities';
 
 
-
+  // database singleton pattern
   factory DatabaseHelper() {
     if (_databaseHelper == null) {
       _databaseHelper = DatabaseHelper._createInstance();
@@ -32,6 +35,7 @@ class DatabaseHelper {
     return _database;
   }
 
+  // initialing database in application directory
   Future<Database> initialDatabase() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String path = join(appDocDir.path, "database.db");
@@ -39,31 +43,33 @@ class DatabaseHelper {
     return db;
   }
 
+  // create city table
   void _createDB(Database db, int version) async {
-    // create city table
     await db.execute(
         'CREATE TABLE $tableName($cityId INTIGER PRIMARY KEY,$cityName TEXT)');
   }
 
-// start city CRUD functions/
+  // start city CRUD functions/
+  //getting cities
   Future<List<Map<String, dynamic>>> getCities() async {
     Database database = await this.database;
     var result = await database.rawQuery('SELECT * FROM $tableName');
     return result;
   }
-
+  // saving city object
   Future<int> saveCity(FavoriteCity city) async {
     Database database = await this.database;
     var result = await database.insert(tableName, city.toMap());
     return result;
   }
-
+  // deleting city
   Future<int> deleteCity(FavoriteCity city) async {
     Database database = await this.database;
     var result = await database.rawDelete('DELETE FROM $tableName WHERE $cityId = ${city.id}');
     return result;
   }
 
+  // getting city list
   Future<List<FavoriteCity>> getCityList() async {
     var cityListMap = await getCities();
     int count = cityListMap.length;

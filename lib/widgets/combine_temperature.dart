@@ -3,6 +3,8 @@ import 'package:sunshine/models/weather.dart';
 import 'package:sunshine/widgets/temperature.dart';
 import 'package:sunshine/widgets/weather_conditions.dart';
 
+
+// temperature  widget
 class CombinedWeatherTemperature extends StatelessWidget {
   final WeatherModel weather;
 

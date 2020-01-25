@@ -34,6 +34,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String _currentCity;
   Completer<void> _refreshCompleter;
 
+
+  //init notification and refresh plugins
   @override
   void initState() {
     super.initState();
@@ -46,6 +48,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _refreshCompleter = Completer<void>();
   }
 
+  // Method returning localisation and getting localisation weather after clicking every
+  // day notification.
   Future onSelectNotification(String payload) {
     return _getLocalisation();
   }
@@ -66,21 +70,23 @@ class _WeatherScreenState extends State<WeatherScreen> {
     } catch (e) {
       print(e);
     }
+    // getting weather for city
     if (_currentCity != null) {
       BlocProvider.of<WeatherBloc>(context)
           .add(GetWeatherEvent(city: _currentCity));
     }
   }
 
+  // formatting datetime for notification
   _formatDateTime() {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MM-dd-yyyy hh:mm').format(now);
     return formattedDate;
   }
 
-  // showing notification
+  // showing notification every day at 6 o'clock
   showNotification() async {
-    var time = new Time(20, 36, 0);
+    var time = new Time(6, 0, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name',

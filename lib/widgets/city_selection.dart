@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sunshine/backend/city/bloc.dart';
 
+
+// city selection and city list widget
 class CitySelection extends StatefulWidget {
   @override
   State<CitySelection> createState() => _CitySelectionState();
@@ -32,7 +34,7 @@ class _CitySelectionState extends State<CitySelection> {
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'City',
-                            hintText: 'Chicago',
+                            hintText: 'Sosnowiec',
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),
                               onPressed: () {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+// rich text on welcome page
 class MainText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

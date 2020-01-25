@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+// Minimum and maximum temperature widget
 class Temperature extends StatelessWidget {
   final double temperature;
   final double low;
